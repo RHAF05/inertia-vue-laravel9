@@ -3,10 +3,18 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { useForm } from '@inertiajs/inertia-vue3'
+import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia'
 
 defineProps({
     notes: Array
 });
+
+const datafind = ref(null)
+const buscar = (datafind) => {
+    let q= datafind.value;
+    Inertia.get(route('notes.index', {q}), {}, {preserveState: true});
+};
 
 const form = useForm({});
 
@@ -38,6 +46,9 @@ const destroy = (id) => {
                         </div>
                         <div class="md:col-span-2 mt-5 md:mt-0"> <!-- Decimos que ocupe las dos columnas restantes (col-span-2), margen superior en 5 (mt-5) y que en pantallas medianas pones el margen superior en cero (md:mt-0) -->
                             <div class="shadow bg-white md:rounded-md p-4">
+                                <div class="flex justify-between">
+                                    <input type="text" class="form-input rounded-md shadow-sm" placeholder="..." v-model="datafind" />
+                                </div>
                                 <table>
                                     <tr v-for="note in notes" :key="note.id">
                                         <td class="border px-4 py-2">{{ note.excerpt }}</td>

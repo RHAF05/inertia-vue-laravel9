@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-use
-
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+
+
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+
+
+        Inertia::share('flash', function () {
+            return ['status' => Session::get('status')];
+        });
     }
 }
