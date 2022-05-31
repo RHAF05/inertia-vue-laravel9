@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Session;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -26,5 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+
+        Inertia::share('flash', function () {
+            return ['status' => Session::get('status')];
+        });
     }
 }
